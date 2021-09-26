@@ -15,8 +15,7 @@ export const DevicePanes: FC = () => {
         <BluetoothSelector
           options={deviceProfile}
           onChange={(event) => setDevice(event.target.value)}
-        >
-        </BluetoothSelector>
+        ></BluetoothSelector>
         {device && <DeviceControl device={device}></DeviceControl>}
       </section>
 

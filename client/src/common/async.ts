@@ -72,12 +72,11 @@ export class Resolver<T = void> implements PromiseLike<T> {
   }
 }
 
-export type ReadonlyResolver<T = void> =
-  & Resolver<T>
-  & (
+export type ReadonlyResolver<T = void> = Resolver<T> &
+  (
     | Promise<T>
     | {
-      readonly settled: any;
-      readonly promise: any;
-    }
+        readonly settled: any;
+        readonly promise: any;
+      }
   );

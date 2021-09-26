@@ -28,8 +28,7 @@ export const LovenseDevicesPage: FC<{}> = () => {
         <br />
         Open your developer console to see more.
         <br />
-        Only supports some{" "}
-        <a href="https://www.lovense.com/compare">
+        Only supports some <a href="https://www.lovense.com/compare">
           Lovense
         </a>{" "}
         devices.

@@ -1,7 +1,11 @@
 import React, { FC } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+
 import { LovenseDevicesPage } from "./pages/lovense-devices";
 import { ScrapPage } from "./reconcilliation/scrap";
+
+import "./common.scss";
 
 const routes: { [_: string]: FC } = {
   "/lovense-devices": LovenseDevicesPage,
@@ -9,41 +13,42 @@ const routes: { [_: string]: FC } = {
 };
 
 const App: FC = () => {
-  const path = document.location.pathname;
-  const Route = routes[path];
-  const Page = Route || Index;
-
-  // sue me
-  document.title = path.slice(1) || `teledildonics.dev`;
-
   return (
-    <section
-      style={{ fontFamily: "garamond", margin: "32px", fontSize: "24px" }}
-    >
+    <section style={{ margin: "32px", fontSize: "24px" }}>
       <h1
         style={{
           marginBottom: "24px",
         }}
       >
-        <a href="/">teledildonics.dev</a>/<a href={path}>{path.slice(1)}</a>
+        <a href="/">teledildonics.dev</a>
       </h1>
 
-      <Page />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <IndexPage />
+          </Route>
+          <Route exact path="/lovense-devices">
+            <LovenseDevicesPage />
+          </Route>
+          <Route exact path="/scrap">
+            <ScrapPage />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </section>
   );
 };
 
-export const Index: FC = () => {
+export const IndexPage: FC = () => {
   return (
     <ul style={{ listStyleType: "square" }}>
-      {Object.entries(routes).map((
-        [path, page],
-        index,
-      ) => (
-        <li key={index} style={{ marginTop: "16px", marginLeft: "1em" }}>
-          <a href={path}>{path.slice(1)}</a>
-        </li>
-      ))}
+      <li style={{ marginTop: "16px", marginLeft: "1em" }}>
+        <a href="/lovense-devices">Lovense devices</a>
+      </li>
+      <li style={{ marginTop: "16px", marginLeft: "1em" }}>
+        <a href="/scrap">scrap</a>
+      </li>
     </ul>
   );
 };

@@ -11,16 +11,16 @@ import type { unsafe } from "../common/safety";
 type UseLovense =
   | undefined
   | {
-    lovense: Lovense;
-    model: Model;
-    id: string;
-    canRotate: true;
-    stop(): Promise<unknown>;
-    vibration: VibrationLevel;
-    setVibration(level: VibrationLevel): Promise<VibrationLevel>;
-    rotation: RotationLevel;
-    setRotation(rotation: RotationLevel): Promise<RotationLevel>;
-  };
+      lovense: Lovense;
+      model: Model;
+      id: string;
+      canRotate: true;
+      stop(): Promise<unknown>;
+      vibration: VibrationLevel;
+      setVibration(level: VibrationLevel): Promise<VibrationLevel>;
+      rotation: RotationLevel;
+      setRotation(rotation: RotationLevel): Promise<RotationLevel>;
+    };
 
 export const useLovense = (lovense?: Lovense): UseLovense => {
   const [info, setInfo] = useState<LovenseDeviceInfo>();

@@ -303,7 +303,7 @@ export default class Lovense implements AsyncDestroy {
         }
 
         return result;
-      })
+      }),
     );
   }
 
@@ -507,8 +507,8 @@ export const deviceProfile = {
     ...[..."45"]
       .map((a) =>
         [..."0123456789abcdef"].map((b) =>
-          [..."34"].map((c) => `${a}${b}300001-002${c}-4bd4-bbd5-a6920e4c5653`)
-        )
+          [..."34"].map((c) => `${a}${b}300001-002${c}-4bd4-bbd5-a6920e4c5653`),
+        ),
       )
       .flat(3),
   ],
