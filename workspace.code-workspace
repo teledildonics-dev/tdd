@@ -1,14 +1,17 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": "client",
+			"name": "🎛️ Client"
 		},
 		{
-			"path": "client"
+			"path": "server",
+			"name": "🖧 Server",
 		},
 		{
-			"path": "server"
-		}
+			"path": ".",
+			"name": "📁 Workspace"
+		},
 	],
 	"settings": {}
 }
