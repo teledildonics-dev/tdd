@@ -1,10 +1,12 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 
 import { deviceProfile } from "../lovense/lovense";
 
-import BluetoothSelector, { buttonStyles } from "../components/bluetooth-selector";
+import BluetoothSelector, {
+  buttonStyles,
+} from "../components/bluetooth-selector";
 
-import { Lovense, LovenseDeviceInfo } from "./lovense-abstract";
+import type { Lovense, LovenseDeviceInfo } from "./lovense-abstract";
 import { LovenseDevice } from "./lovense-device";
 import { LovenseFake } from "./lovense-fake";
 
@@ -21,7 +23,7 @@ export const LovenseSelector: FC<{
 
     let abortion = new AbortController();
 
-    lovense.info().then(info => {
+    lovense.info().then((info) => {
       if (abortion.signal.aborted) {
         return;
       }
@@ -41,7 +43,7 @@ export const LovenseSelector: FC<{
         <br />
         <BluetoothSelector
           options={deviceProfile}
-          onChange={event => {
+          onChange={(event) => {
             setInfo(undefined);
             const device = event.target.value;
             if (device) {
@@ -59,9 +61,9 @@ export const LovenseSelector: FC<{
             ...buttonStyles,
             background: "#FEB",
             cursor: "pointer",
-            flexDirection: "column"
+            flexDirection: "column",
           }}
-          onClick={_event => {
+          onClick={(_event) => {
             setInfo(undefined);
             const lovense = new LovenseFake();
             setLovense(lovense);

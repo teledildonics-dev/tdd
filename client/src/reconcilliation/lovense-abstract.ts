@@ -23,7 +23,7 @@ export abstract class Lovense extends AsyncDisposable {
     return this.cachedInfo;
   }
   private cachedInfo: Promise<LovenseDeviceInfo> | undefined;
-  protected abstract async info_(): Promise<LovenseDeviceInfo>;
+  protected abstract info_(): Promise<LovenseDeviceInfo>;
 
   /// The device's current vibration level, or undefined if unknown.
   abstract vibration: VibrationLevel;
@@ -31,8 +31,8 @@ export abstract class Lovense extends AsyncDisposable {
     this.throwIfDisposeStarted();
     return this.setVibration_(vibration);
   }
-  protected abstract async setVibration_(
-    vibration: VibrationLevel
+  protected abstract setVibration_(
+    vibration: VibrationLevel,
   ): Promise<VibrationLevel>;
 
   /// Whether this device is capable of rotation or not.
@@ -47,14 +47,18 @@ export abstract class Lovense extends AsyncDisposable {
   abstract rotation: RotationLevel;
   async setRotation(rotation: RotationLevel): Promise<RotationLevel> {
     if (!(await this.canRotate())) {
-      throw new Error(`This device does not support rotation. Try .canRotate().`);
+      throw new Error(
+        `This device does not support rotation. Try .canRotate().`,
+      );
     }
 
     this.throwIfDisposeStarted();
 
     return this.setRotation_(rotation);
   }
-  protected abstract async setRotation_(rotation: RotationLevel): Promise<RotationLevel>;
+  protected abstract setRotation_(
+    rotation: RotationLevel,
+  ): Promise<RotationLevel>;
 
   async stop(): Promise<unknown> {
     this.throwIfDisposeStarted();

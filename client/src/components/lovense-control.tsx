@@ -1,7 +1,7 @@
-import React, { useState, FC, useEffect, useCallback } from "react";
+import React, { FC, useCallback, useEffect, useState } from "react";
 import { useLovense } from "../hooks/lovense";
 import { useThrottledChanges } from "../hooks/throttle";
-import { LovenseDeviceInfo } from "../lovense/lovense";
+import type { LovenseDeviceInfo } from "../lovense/lovense";
 import { PatternsControl } from "./patterns";
 import { PatternDisplay, thor } from "../lovense/patterns";
 import { useLovenseDebug } from "../hooks/lovense-debug";
@@ -9,11 +9,17 @@ import { useLovenseDebug } from "../hooks/lovense-debug";
 export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
   const [targetVibrationLevel, setTargetVibrationLevel] = useState(0);
   const targetVibrationPower = targetVibrationLevel / 20.0;
-  const throttledTargetVibrationPower = useThrottledChanges(500, targetVibrationPower);
+  const throttledTargetVibrationPower = useThrottledChanges(
+    500,
+    targetVibrationPower,
+  );
 
   const [targetRotationLevel, setTargetRotationLevel] = useState(0);
   const targetRotationPower = targetRotationLevel / 20.0;
-  const throttledTargetRotationPower = useThrottledChanges(500, targetRotationPower);
+  const throttledTargetRotationPower = useThrottledChanges(
+    500,
+    targetRotationPower,
+  );
 
   const [info, setInfo] = useState<LovenseDeviceInfo>();
   const [batch, setBatch] = useState<number>();
@@ -28,7 +34,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
       // state with the toy when it reconnects.
       setTargetVibrationLevel(0);
       setTargetRotationLevel(0);
-    }, [])
+    }, []),
   );
 
   useLovenseDebug(lovense);
@@ -40,7 +46,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
     }
 
     const info = lovense.info();
-    info.then(info => {
+    info.then((info) => {
       if (!lovense) {
         return;
       }
@@ -138,7 +144,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
             cursor: "default",
             borderRadius: "4px",
             borderTopLeftRadius: 0,
-            verticalAlign: "top"
+            verticalAlign: "top",
           }}
         >
           connecting...
@@ -167,7 +173,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
           flexDirection: "column",
           cursor: "default",
           borderRadius: "4px",
-          verticalAlign: "top"
+          verticalAlign: "top",
         }}
       >
         <div
@@ -176,14 +182,14 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "start",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <span
             style={{
               fontSize: "30px",
               fontWeight: "bold",
-              fontFamily: "Trebuchet MS"
+              fontFamily: "Trebuchet MS",
             }}
           >
             {info ? info.model : device.name}
@@ -196,7 +202,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
                 display: "inline-block",
                 fontSize: "12px",
                 fontWeight: "normal",
-                lineHeight: "10px"
+                lineHeight: "10px",
               }}
             >
               {batch}
@@ -225,7 +231,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
                 width: "100%",
                 justifyContent: "flex-end",
                 flexDirection: "row",
-                height: "56px"
+                height: "56px",
               }}
             >
               <span
@@ -233,7 +239,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
                 aria-label="Stop"
                 style={{
                   fontSize: "3em",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   setTargetRotationLevel(0);
@@ -250,7 +256,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
                   margin: "4px",
                   fontSize: "16px",
                   whiteSpace: "pre",
-                  fontFamily: "consolas, monospace"
+                  fontFamily: "consolas, monospace",
                 }}
               >
                 {Math.floor(targetVibrationPower * 100)
@@ -264,14 +270,14 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
                 min="0"
                 max="20"
                 type="range"
-                onChange={event => {
+                onChange={(event) => {
                   const level = Number(event.target.value);
                   setTargetVibrationLevel(level);
                 }}
                 style={{
                   cursor: "pointer",
                   width: "225px",
-                  transform: "scaleY(2.0)"
+                  transform: "scaleY(2.0)",
                 }}
               />
             </div>
@@ -283,7 +289,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
                   width: "100%",
                   justifyContent: "flex-end",
                   flexDirection: "row",
-                  height: "56px"
+                  height: "56px",
                 }}
               >
                 <span>rotation:</span>
@@ -293,7 +299,7 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
                     margin: "4px",
                     fontSize: "16px",
                     whiteSpace: "pre",
-                    fontFamily: "consolas, monospace"
+                    fontFamily: "consolas, monospace",
                   }}
                 >
                   {Math.floor(targetRotationPower * 100)
@@ -307,14 +313,14 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
                   min="-20"
                   max="20"
                   type="range"
-                  onChange={event => {
+                  onChange={(event) => {
                     const level = Number(event.target.value);
                     setTargetRotationLevel(level);
                   }}
                   style={{
                     cursor: "pointer",
                     width: "225px",
-                    transform: "scaleY(2.0)"
+                    transform: "scaleY(2.0)",
                   }}
                 />
               </div>
@@ -328,7 +334,11 @@ export const DeviceControl: FC<{ device: BluetoothDevice }> = ({ device }) => {
             {info && pattern && (
               <>
                 <PatternDisplay pattern={pattern} x={t} height={100} />
-                <button onClick={() => setPatternEnabled(!patternEnabled)}>run</button>
+                <button
+                  onClick={() => setPatternEnabled(!patternEnabled as any)}
+                >
+                  run
+                </button>
               </>
             )}
           </>

@@ -3,11 +3,24 @@
 /// See protocol documentation at
 /// https://stpihkal.docs.buttplug.io/hardware/lovense.html.
 
-import { assert, first, unwrap, only, unsafe, Lock, AsyncDestroy } from "../common/safety";
+import {
+  assert,
+  AsyncDestroy,
+  first,
+  Lock,
+  only,
+  unsafe,
+  unwrap,
+} from "../common/safety";
 import utf8 from "../common/utf8";
 import { withEventStream } from "../common/events";
 import { addTimeout, sleep } from "../common/async";
-import { Model, modelsById, modelCapabilities, DeviceCapabilities } from "./models";
+import {
+  DeviceCapabilities,
+  Model,
+  modelCapabilities,
+  modelsById,
+} from "./models";
 
 type EventType = "connect" | "disconnect";
 
@@ -29,7 +42,8 @@ export default class Lovense implements AsyncDestroy {
 
   /// Safety: these must only be accessed after we've connected (which initializes them).
   private service: BluetoothRemoteGATTService = undefined as unsafe;
-  private characteristics: BluetoothRemoteGATTCharacteristic[] = undefined as unsafe;
+  private characteristics: BluetoothRemoteGATTCharacteristic[] =
+    undefined as unsafe;
   private transmitter: BluetoothRemoteGATTCharacteristic = undefined as unsafe;
   private receiver: BluetoothRemoteGATTCharacteristic = undefined as unsafe;
 
@@ -37,7 +51,9 @@ export default class Lovense implements AsyncDestroy {
   private callTimeout: number = 4000;
 
   /// Safari doesn't support new EventTarget.
-  private eventTarget: EventTarget = document.createElement("teledildonics-EventTarget");
+  private eventTarget: EventTarget = document.createElement(
+    "teledildonics-EventTarget",
+  );
 
   public constructor(device: BluetoothDevice) {
     this.device = device;
@@ -51,16 +67,24 @@ export default class Lovense implements AsyncDestroy {
   }
 
   private logPrefix(): string {
-    return `${this.deviceName()
-      .slice(0, 10)
-      .padStart(10)}:`;
+    return `${
+      this.deviceName()
+        .slice(0, 10)
+        .padStart(10)
+    }:`;
   }
 
-  public addEventListener(type: EventType, listener: (event: unknown) => void): unknown {
+  public addEventListener(
+    type: EventType,
+    listener: (event: unknown) => void,
+  ): unknown {
     return this.eventTarget.addEventListener(type, listener);
   }
 
-  public removeEventListener(type: EventType, listener: (event: unknown) => void): unknown {
+  public removeEventListener(
+    type: EventType,
+    listener: (event: unknown) => void,
+  ): unknown {
     return this.removeEventListener(type, listener);
   }
 
@@ -86,24 +110,29 @@ export default class Lovense implements AsyncDestroy {
         }
 
         const onMessage = (event: { target: { value: DataView } }) => {
-          assert(event && event.target && event.target.value instanceof DataView);
+          assert(
+            event && event.target && event.target.value instanceof DataView,
+          );
           const binary: DataView = event.target.value;
 
           const s = utf8.decode(binary);
           console.info(
             `${this.logPrefix()} got  %c${s}`,
-            "color: #131; font-weight: bold; border: 1px solid #131; padding: 2px 6px; background: #EEE;"
+            "color: #131; font-weight: bold; border: 1px solid #131; padding: 2px 6px; background: #EEE;",
           );
         };
 
         const onDisconnected = () => {
           console.info(this.logPrefix(), "Disconnected.");
           this.connected = undefined;
-          this.device.removeEventListener("gattserverdisconnected", onDisconnected);
+          this.device.removeEventListener(
+            "gattserverdisconnected",
+            onDisconnected,
+          );
           if (this.receiver) {
             this.receiver.removeEventListener(
               "characteristicvaluechanged",
-              onMessage as unsafe
+              onMessage as unsafe,
             );
           }
           this.eventTarget.dispatchEvent(new Event("disconnect"));
@@ -113,10 +142,17 @@ export default class Lovense implements AsyncDestroy {
 
         this.service = only(await this.server.getPrimaryServices());
         this.characteristics = await this.service.getCharacteristics();
-        this.transmitter = only(this.characteristics.filter(c => c.properties.write));
-        this.receiver = only(this.characteristics.filter(c => !c.properties.write));
+        this.transmitter = only(
+          this.characteristics.filter((c) => c.properties.write),
+        );
+        this.receiver = only(
+          this.characteristics.filter((c) => !c.properties.write),
+        );
 
-        this.receiver.addEventListener("characteristicvaluechanged", onMessage as unsafe);
+        this.receiver.addEventListener(
+          "characteristicvaluechanged",
+          onMessage as unsafe,
+        );
 
         await this.receiver.startNotifications();
 
@@ -127,7 +163,7 @@ export default class Lovense implements AsyncDestroy {
         }
       })(),
       6000,
-      new Error("Initial connection to Lovense timed out")
+      new Error("Initial connection to Lovense timed out"),
     );
 
     this.connected.catch(() => {
@@ -175,12 +211,14 @@ export default class Lovense implements AsyncDestroy {
       try {
         return f();
       } catch (error) {
-        if (this.connected === undefined || this.connectionCount > connectionCount) {
+        if (
+          this.connected === undefined || this.connectionCount > connectionCount
+        ) {
           console.warn(
             this.logPrefix(),
             "disconnected then",
             error,
-            "was thrown. Retrying in 1s."
+            "was thrown. Retrying in 1s.",
           );
           await sleep(500);
           await this.connect();
@@ -189,7 +227,7 @@ export default class Lovense implements AsyncDestroy {
           console.error(
             this.logPrefix(),
             "didn't disconnnect but command still failed. Retrying in 10s.",
-            error
+            error,
           );
           await sleep(10000);
           continue;
@@ -199,7 +237,9 @@ export default class Lovense implements AsyncDestroy {
   }
 
   /// Cleans up all resources assocaited with this instance, disconnects, and makes it unusable.
-  public async destroy(error: Error = new Error("Lovense::destroy()ed")): Promise<Error> {
+  public async destroy(
+    error: Error = new Error("Lovense::destroy()ed"),
+  ): Promise<Error> {
     if (!this.destroyed) {
       this.destroyed = (async () => {
         try {
@@ -227,7 +267,7 @@ export default class Lovense implements AsyncDestroy {
   public async call<Result>(
     request: string,
     handler: (responses: ReadableStreamReader<string>) => Promise<Result>,
-    timeout: number | undefined = this.callTimeout
+    timeout: number | undefined = this.callTimeout,
   ): Promise<Result> {
     if (this.destroyed) {
       throw await this.destroyed;
@@ -245,18 +285,20 @@ export default class Lovense implements AsyncDestroy {
           this.receiver,
           "characteristicvaluechanged",
           (event: unsafe) => {
-            assert(event && event.target && event.target.value instanceof DataView);
+            assert(
+              event && event.target && event.target.value instanceof DataView,
+            );
             const binary: DataView = event.target.value;
             return utf8.decode(binary);
           },
-          async responses => {
+          async (responses) => {
             console.info(
               `${this.logPrefix()} sent %c${request}`,
-              "color: purple; font-weight: bold; border: 1px solid purple; padding: 2px 6px; background: #EEE;"
+              "color: purple; font-weight: bold; border: 1px solid purple; padding: 2px 6px; background: #EEE;",
             );
             await this.transmitter.writeValue(utf8.encode(request));
             return await handler(responses);
-          }
+          },
         );
 
         if (timeout !== undefined) {
@@ -277,9 +319,9 @@ export default class Lovense implements AsyncDestroy {
       return this.cachedInfo;
     }
 
-    return this.call("DeviceType;", async responses => {
+    return this.call("DeviceType;", async (responses) => {
       const { value } = await responses.read();
-      const [id, firmware, serial] = value.slice(0, -1).split(":");
+      const [id, firmware, serial] = value!.slice(0, -1).split(":");
       const model = unwrap(modelsById.get(id));
       const capabilities = unwrap(modelCapabilities.get(model));
       this.cachedInfo = {
@@ -287,7 +329,7 @@ export default class Lovense implements AsyncDestroy {
         model,
         firmware: Number(firmware),
         capabilities,
-        serial
+        serial,
       };
       return this.cachedInfo;
     });
@@ -295,17 +337,17 @@ export default class Lovense implements AsyncDestroy {
 
   /// Returns the battery level as a value between 0.0 and 1.0.
   public async battery(): Promise<number> {
-    const value = await this.call("Battery;", async responses => {
+    const value = await this.call("Battery;", async (responses) => {
       const { value } = await responses.read();
       return value;
     });
 
-    let body = unwrap(first(value.split(";")));
+    let body = unwrap(first(value!.split(";")));
 
     if (body[0] === "s") {
       console.warn(
         this.logPrefix(),
-        "Got `s` prefix in battery value. Not sure why this happens."
+        "Got `s` prefix in battery value. Not sure why this happens.",
       );
       // This seems to be what happens if you request the battery level while it's currently vibrating.
       // Maybe it's the way you check if it's active, so you know if you need to stop it?
@@ -323,9 +365,9 @@ export default class Lovense implements AsyncDestroy {
 
   /// Returns the production batch date of this device.
   public async batch(): Promise<number> {
-    return this.call("GetBatch;", async responses => {
+    return this.call("GetBatch;", async (responses) => {
       const { value } = await responses.read();
-      return Number(unwrap(first(value.split(/[;,]/))));
+      return Number(unwrap(first(value!.split(/[;,]/))));
     });
   }
 
@@ -341,7 +383,7 @@ export default class Lovense implements AsyncDestroy {
       throw new Error("Level must be integer from 0-20.");
     }
 
-    return this.call(`Vibrate:${level};`, async responses => {
+    return this.call(`Vibrate:${level};`, async (responses) => {
       const { value } = await responses.read();
       assert(value === "OK;", "Unexpected response to Vibrate command.");
     });
@@ -368,7 +410,7 @@ export default class Lovense implements AsyncDestroy {
       throw new Error("Level must be integer from 0-20.");
     }
 
-    return this.call(`${command}:${level};`, async responses => {
+    return this.call(`${command}:${level};`, async (responses) => {
       const { value } = await responses.read();
       assert(value === "OK;", "Unexpected response to Rotate command.");
     });
@@ -381,7 +423,7 @@ export default class Lovense implements AsyncDestroy {
   private async getPattern(index: number): Promise<Array<number>> {
     return this.call(
       `GetPatten:${index};`,
-      async responses => {
+      async (responses) => {
         const powers = [];
         while (true) {
           const { value } = await responses.read();
@@ -389,21 +431,21 @@ export default class Lovense implements AsyncDestroy {
             throw new Error("Got Error response from device.");
           }
           assert(
-            /^P[0-9]:[0-9]{1,2}\/[0-9]{1,2}:[0-9]+;$/.test(value),
-            "Unexpected response to GetPatten:#"
+            /^P[0-9]:[0-9]{1,2}\/[0-9]{1,2}:[0-9]+;$/.test(value!),
+            "Unexpected response to GetPatten:#",
           );
-          const body = unwrap(first(value.split(";")));
+          const body = unwrap(first(value!.split(";")));
           const [tag, part, levels] = body.split(/:/g);
           assert(tag === `P${index}`, "Got pattern response for wrong index!");
           const [partIndex, partCount] = part.split("/");
-          powers.push(...[...levels].map(digit => Number(digit) / 9.0));
+          powers.push(...[...levels].map((digit) => Number(digit) / 9.0));
           if (partIndex === partCount) {
             break;
           }
         }
         return powers;
       },
-      this.callTimeout * 10
+      this.callTimeout * 10,
     );
   }
 
@@ -412,12 +454,15 @@ export default class Lovense implements AsyncDestroy {
   /// The result is an array of arrays of values between 0.0 and 1.0,
   /// each indicating the target power level for half of a second.
   public async patterns(): Promise<Array<Array<number>>> {
-    const response = await this.call(`GetPatten;`, async responses => {
+    const response = await this.call(`GetPatten;`, async (responses) => {
       const { value } = await responses.read();
       return value;
     });
-    assert(/^P:0?1?2?3?4?5?6?7?8?9?;$/.test(response), "Unexpected response to GetPatten");
-    const indices = unwrap(first(response.slice(2).split(";")));
+    assert(
+      /^P:0?1?2?3?4?5?6?7?8?9?;$/.test(response!),
+      "Unexpected response to GetPatten",
+    );
+    const indices = unwrap(first(response!.slice(2).split(";")));
     const patterns = [];
     for (const index of indices) {
       patterns.push(await this.getPattern(Number(index)));
@@ -429,7 +474,7 @@ export default class Lovense implements AsyncDestroy {
   ///
   ///
   public async startPattern(index: number): Promise<void> {
-    return this.call(`Preset:${index};`, async responses => {
+    return this.call(`Preset:${index};`, async (responses) => {
       const { value } = await responses.read();
       assert(value === "OK;", "Unexpected response to preset command.");
     });
@@ -463,11 +508,11 @@ export const deviceProfile = {
     "0000fff0-0000-1000-8000-00805f9b34fb",
     "6e400001-b5a3-f393-e0a9-e50e24dcca9e",
     ...[..."45"]
-      .map(a =>
-        [..."0123456789abcdef"].map(b =>
-          [..."34"].map(c => `${a}${b}300001-002${c}-4bd4-bbd5-a6920e4c5653`)
+      .map((a) =>
+        [..."0123456789abcdef"].map((b) =>
+          [..."34"].map((c) => `${a}${b}300001-002${c}-4bd4-bbd5-a6920e4c5653`)
         )
       )
-      .flat(3)
-  ]
+      .flat(3),
+  ],
 };

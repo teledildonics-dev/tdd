@@ -1,7 +1,10 @@
 /// Some utility functions to help manage types safely.
 
 /// Ensures a condition is truthy, or throws.
-export function assert(condition: unknown, message: string = "assertion failed") {
+export function assert(
+  condition: unknown,
+  message: string = "assertion failed",
+) {
   // TODO: use `: asserts condition` above once babel/whatever can support it
 
   if (condition === false || condition === null || condition === undefined) {
@@ -14,7 +17,7 @@ export function assert(condition: unknown, message: string = "assertion failed")
 /// Ensures a value is not undefined and return it, or throws.
 export const unwrap = <T>(
   value: T | undefined,
-  message: string = "unwrapped void value"
+  message: string = "unwrapped void value",
 ): T => {
   if (value === undefined) {
     throw new Error(message);
@@ -60,11 +63,11 @@ export class Lock implements AsyncDestroy {
   /// it's released, but will prempt any other uses that are pending.
   async destroy(): Promise<Error> {
     if (!this.destruction) {
-      this.destruction = new Promise(async resolve => {
+      this.destruction = new Promise(async (resolve) => {
         try {
           await this.tail;
         } catch (error) {
-          return resolve(error);
+          return resolve(error as any);
         }
         return resolve(new Error("Lock destroyed"));
       });

@@ -1,15 +1,18 @@
-import { unsafe } from "./safety";
+import type { unsafe } from "./safety";
 
 export const sleep = async (ms: number) => {
-  await new Promise(resolve => setTimeout(resolve, ms));
+  await new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 export const addTimeout = async <T>(
   value: Promise<T>,
   timeout: number,
-  error: Error = new TimeoutError(`Timed out (${timeout} ms)`)
+  error: Error = new TimeoutError(`Timed out (${timeout} ms)`),
 ) => {
-  return Promise.race([value, sleep(timeout).then(() => Promise.reject(error))]);
+  return Promise.race([
+    value,
+    sleep(timeout).then(() => Promise.reject(error)),
+  ]);
 };
 
 export class TimeoutError extends Error {}
@@ -23,21 +26,27 @@ export class Resolver<T = void> implements PromiseLike<T> {
     public readonly promise: Promise<T> = new Promise((resolve, reject) => {
       this.resolve_ = resolve;
       this.reject_ = reject;
-    })
+    }),
   ) {
     this.then(
-      _value => {
+      (_value) => {
         this.settled_ = "resolved";
       },
-      _error => {
+      (_error) => {
         this.settled_ = "rejected";
-      }
+      },
     );
   }
 
   public then<TResult1 = T, TResult2 = never>(
-    onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null,
-    onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
+    onfulfilled?:
+      | ((value: T) => TResult1 | PromiseLike<TResult1>)
+      | undefined
+      | null,
+    onrejected?:
+      | ((reason: any) => TResult2 | PromiseLike<TResult2>)
+      | undefined
+      | null,
   ): PromiseLike<TResult1 | TResult2> {
     return this.promise.then(onfulfilled, onrejected);
   }
@@ -63,10 +72,12 @@ export class Resolver<T = void> implements PromiseLike<T> {
   }
 }
 
-export type ReadonlyResolver<T = void> = Resolver<T> &
-  (
+export type ReadonlyResolver<T = void> =
+  & Resolver<T>
+  & (
     | Promise<T>
     | {
-        readonly settled: any;
-        readonly promise: any;
-      });
+      readonly settled: any;
+      readonly promise: any;
+    }
+  );

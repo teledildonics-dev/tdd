@@ -5,7 +5,7 @@ import { ScrapPage } from "./reconcilliation/scrap";
 
 const routes: { [_: string]: FC } = {
   "/lovense-devices": LovenseDevicesPage,
-  "/scrap": ScrapPage
+  "/scrap": ScrapPage,
 };
 
 const App: FC = () => {
@@ -14,13 +14,15 @@ const App: FC = () => {
   const Page = Route || Index;
 
   // sue me
-  document.title = Route ? path.slice(1) : `teledildonics.dev`;
+  document.title = path.slice(1) || `teledildonics.dev`;
 
   return (
-    <section style={{ fontFamily: "garamond", margin: "32px", fontSize: "24px" }}>
+    <section
+      style={{ fontFamily: "garamond", margin: "32px", fontSize: "24px" }}
+    >
       <h1
         style={{
-          marginBottom: "24px"
+          marginBottom: "24px",
         }}
       >
         <a href="/">teledildonics.dev</a>/<a href={path}>{path.slice(1)}</a>
@@ -34,7 +36,10 @@ const App: FC = () => {
 export const Index: FC = () => {
   return (
     <ul style={{ listStyleType: "square" }}>
-      {Object.entries(routes).map(([path, page], index) => (
+      {Object.entries(routes).map((
+        [path, page],
+        index,
+      ) => (
         <li key={index} style={{ marginTop: "16px", marginLeft: "1em" }}>
           <a href={path}>{path.slice(1)}</a>
         </li>
@@ -43,4 +48,15 @@ export const Index: FC = () => {
   );
 };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById("root"),
+);
+
+// Hot Module Replacement (HMR) - Remove this snippet to remove HMR.
+// Learn more: https://snowpack.dev/concepts/hot-module-replacement
+if (import.meta.hot) {
+  import.meta.hot.accept();
+}

@@ -1,9 +1,9 @@
-import { FC } from "react";
+import type { FC } from "react";
 import React from "react";
 
 export const BluetoothLogo: FC<{ width?: number; height?: number }> = ({
   width = 16,
-  height
+  height,
 }) => {
   return (
     <svg

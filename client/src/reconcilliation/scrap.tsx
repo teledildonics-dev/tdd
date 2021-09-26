@@ -2,7 +2,11 @@ import { FC, useState } from "react";
 import React from "react";
 import { LovenseSelector } from "./lovense-selector";
 import { useLovense } from "./use-lovense";
-import { Lovense, VibrationLevel, RotationLevel } from "./lovense-abstract";
+import type {
+  Lovense,
+  RotationLevel,
+  VibrationLevel,
+} from "./lovense-abstract";
 
 export const ScrapPage: FC = () => {
   const [lovenseInternal, setLovense] = useState<Lovense>();
@@ -19,8 +23,10 @@ export const ScrapPage: FC = () => {
             defaultValue="0"
             min="0"
             max="20"
-            onChange={event => {
-              lovense.setVibration(Number(event.target.value) as VibrationLevel);
+            onChange={(event) => {
+              lovense.setVibration(
+                Number(event.target.value) as VibrationLevel,
+              );
             }}
           />
         </label>
@@ -31,7 +37,7 @@ export const ScrapPage: FC = () => {
             defaultValue="0"
             min="-20"
             max="20"
-            onChange={event => {
+            onChange={(event) => {
               lovense.setRotation(Number(event.target.value) as RotationLevel);
             }}
           />

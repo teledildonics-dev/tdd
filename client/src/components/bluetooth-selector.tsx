@@ -1,4 +1,4 @@
-import React, { useState, FC, CSSProperties } from "react";
+import React, { CSSProperties, FC, useState } from "react";
 import { BluetoothLogo } from "./bluetooth-logo";
 
 export const buttonStyles: CSSProperties = {
@@ -18,7 +18,7 @@ export const buttonStyles: CSSProperties = {
   borderRadius: "4px",
   verticalAlign: "top",
   position: "relative",
-  overflow: "hidden"
+  overflow: "hidden",
 };
 
 export const BluetoothSelector: FC<{
@@ -77,7 +77,7 @@ export const BluetoothSelector: FC<{
             width: "32px",
             textAlign: "center",
             borderRight: "1px solid black",
-            fontSize: "2em"
+            fontSize: "2em",
           }}
           onClick={() => {
             setDevice(undefined);
@@ -98,7 +98,7 @@ export const BluetoothSelector: FC<{
             top: 0,
             bottom: 0,
             left: "32px",
-            textAlign: "center"
+            textAlign: "center",
           }}
         >
           <BluetoothLogo /> &nbsp; {device.name}

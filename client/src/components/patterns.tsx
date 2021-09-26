@@ -1,10 +1,12 @@
-import { FC } from "react";
+import type { FC } from "react";
 import React from "react";
-import Lovense from "../lovense/lovense";
+import type Lovense from "../lovense/lovense";
 
-export const PatternsControl: FC<{ lovense: Lovense; patterns: Array<Array<number>> }> = ({
+export const PatternsControl: FC<
+  { lovense: Lovense; patterns: Array<Array<number>> }
+> = ({
   lovense,
-  patterns
+  patterns,
 }) => {
   return (
     <div style={{}}>
@@ -21,7 +23,7 @@ export const PatternsControl: FC<{ lovense: Lovense; patterns: Array<Array<numbe
             fontSize: "0.75em",
             wordWrap: "break-word",
             width: "325px",
-            fontFamily: "monospace"
+            fontFamily: "monospace",
           }}
           onClick={() => lovense.startPattern(index + 1)}
         >
@@ -31,7 +33,7 @@ export const PatternsControl: FC<{ lovense: Lovense; patterns: Array<Array<numbe
               style={{
                 opacity: 0.125 + (1 - 0.125) * value,
                 color: "#000",
-                background: "#888"
+                background: "#888",
               }}
             >
               {Math.round(value * 9)}

@@ -1,10 +1,10 @@
 import Lovense from "../lovense/lovense";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const useLovense = (
   device: BluetoothDevice,
   onConnect?: (_: Lovense) => void,
-  onDisconnect?: (_: Lovense) => void
+  onDisconnect?: (_: Lovense) => void,
 ): Lovense | null => {
   const [lovense, setState] = useState();
 
@@ -23,12 +23,15 @@ export const useLovense = (
       });
     }
 
-    setState(lovense);
+    setState(lovense as any);
 
     return () => {
       (async () => {
-        lovense.stop().catch(error => {
-          console.error("Error from stop command while cleaning up useLovense():", error);
+        lovense.stop().catch((error) => {
+          console.error(
+            "Error from stop command while cleaning up useLovense():",
+            error,
+          );
         });
         await lovense.disconnect();
         await lovense.destroy();
@@ -36,5 +39,5 @@ export const useLovense = (
     };
   }, [device, onConnect, onDisconnect]);
 
-  return lovense;
+  return lovense as any;
 };

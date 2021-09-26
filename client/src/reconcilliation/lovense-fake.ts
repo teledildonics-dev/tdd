@@ -2,7 +2,7 @@ import { Lovense } from "./lovense-abstract";
 
 import { Nora } from "../lovense/models";
 
-import { VibrationLevel, RotationLevel } from "./lovense-abstract";
+import type { RotationLevel, VibrationLevel } from "./lovense-abstract";
 
 import { sleep } from "../common/async";
 
@@ -10,12 +10,11 @@ export class LovenseFake extends Lovense {
   protected async info_() {
     return {
       model: Nora,
-      id:
-        "191109" +
+      id: "191109" +
         performance
           .now()
           .toString(16)
-          .slice(6)
+          .slice(6),
     };
   }
 

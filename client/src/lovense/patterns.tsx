@@ -1,6 +1,6 @@
-import { FC } from "react";
+import type { FC } from "react";
 import React from "react";
-import { unwrap, assert } from "../common/safety";
+import { assert, unwrap } from "../common/safety";
 
 const outerHeight = 300;
 const innerHeight = 2.0;
@@ -17,7 +17,8 @@ export const PatternDisplay: FC<{
 }> = ({ pattern, x, height = 100 }) => {
   const y = pattern(x);
 
-  const xOffset = 0.5 - Math.max(0, x * xScale - 25 * Math.log(x) - outerWidth / 4 + 100);
+  const xOffset = 0.5 -
+    Math.max(0, x * xScale - 25 * Math.log(x) - outerWidth / 4 + 100);
 
   const canvas = document.createElement("canvas");
   canvas.width = outerWidth;
@@ -90,7 +91,13 @@ export const PatternDisplay: FC<{
   g2d.beginPath();
   g2d.strokeStyle = "#B00";
   g2d.lineWidth = 9;
-  g2d.arc(xOffset + x * xScale, outerHeight - (yOffset + y * yScale), 20, 0, 2 * Math.PI);
+  g2d.arc(
+    xOffset + x * xScale,
+    outerHeight - (yOffset + y * yScale),
+    20,
+    0,
+    2 * Math.PI,
+  );
   g2d.stroke();
 
   const url = canvas.toDataURL();
@@ -102,8 +109,13 @@ export const clamp = (x: number, min: number = 0.0, max: number = 1.0) => {
   return Math.min(max, Math.max(min, x));
 };
 
-export const sinny = (x: number, period: number = 1.0, magnitude: number = 1.0) => {
-  return magnitude * (0.5 + 0.5 * Math.sin((x / period) * 2 * Math.PI - Math.PI / 2));
+export const sinny = (
+  x: number,
+  period: number = 1.0,
+  magnitude: number = 1.0,
+) => {
+  return magnitude *
+    (0.5 + 0.5 * Math.sin((x / period) * 2 * Math.PI - Math.PI / 2));
 };
 
 export const compound = (a: number, b: number) => {
@@ -132,7 +144,7 @@ export const thor = (x: number) => {
     longStrongRamp,
     compress(
       Math.pow(0.25 + 0.75 * sinny(x, 4), 0.5),
-      compress(initialClamp, blend(baseline, sinny(xAccelerating, 10)))
-    )
+      compress(initialClamp, blend(baseline, sinny(xAccelerating, 10))),
+    ),
   );
 };

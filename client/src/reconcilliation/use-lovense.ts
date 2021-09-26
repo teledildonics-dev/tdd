@@ -1,26 +1,26 @@
-import { Model } from "../lovense/models";
-import {
-  VibrationLevel,
-  RotationLevel,
+import type { Model } from "../lovense/models";
+import type {
   Lovense,
-  LovenseDeviceInfo
+  LovenseDeviceInfo,
+  RotationLevel,
+  VibrationLevel,
 } from "./lovense-abstract";
 import { useEffect, useState } from "react";
-import { unsafe } from "../common/safety";
+import type { unsafe } from "../common/safety";
 
 type UseLovense =
   | undefined
   | {
-      lovense: Lovense;
-      model: Model;
-      id: string;
-      canRotate: true;
-      stop(): Promise<unknown>;
-      vibration: VibrationLevel;
-      setVibration(level: VibrationLevel): Promise<VibrationLevel>;
-      rotation: RotationLevel;
-      setRotation(rotation: RotationLevel): Promise<RotationLevel>;
-    };
+    lovense: Lovense;
+    model: Model;
+    id: string;
+    canRotate: true;
+    stop(): Promise<unknown>;
+    vibration: VibrationLevel;
+    setVibration(level: VibrationLevel): Promise<VibrationLevel>;
+    rotation: RotationLevel;
+    setRotation(rotation: RotationLevel): Promise<RotationLevel>;
+  };
 
 export const useLovense = (lovense?: Lovense): UseLovense => {
   const [info, setInfo] = useState<LovenseDeviceInfo>();
@@ -31,10 +31,12 @@ export const useLovense = (lovense?: Lovense): UseLovense => {
       return;
     }
 
-    Promise.all([lovense.info(), lovense.canRotate()]).then(([info, canRotate]) => {
-      setInfo(info);
-      setCanRotate(canRotate);
-    });
+    Promise.all([lovense.info(), lovense.canRotate()]).then(
+      ([info, canRotate]) => {
+        setInfo(info);
+        setCanRotate(canRotate);
+      },
+    );
   }, [lovense]);
 
   if (!(lovense && info)) {
@@ -46,6 +48,6 @@ export const useLovense = (lovense?: Lovense): UseLovense => {
     model: info.model,
     id: info.id,
     canVibrate: true,
-    canRotate: canRotate
+    canRotate: canRotate,
   } as unsafe) as UseLovense;
 };

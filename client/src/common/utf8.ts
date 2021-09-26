@@ -7,7 +7,7 @@ const utf8 = {
   },
   decode(b: DataView): string {
     return utf8Decoder.decode(b);
-  }
+  },
 };
 
 export default utf8;
