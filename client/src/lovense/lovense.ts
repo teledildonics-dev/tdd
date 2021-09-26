@@ -67,11 +67,7 @@ export default class Lovense implements AsyncDestroy {
   }
 
   private logPrefix(): string {
-    return `${
-      this.deviceName()
-        .slice(0, 10)
-        .padStart(10)
-    }:`;
+    return `${this.deviceName().slice(0, 10).padStart(10)}:`;
   }
 
   public addEventListener(
@@ -212,7 +208,8 @@ export default class Lovense implements AsyncDestroy {
         return f();
       } catch (error) {
         if (
-          this.connected === undefined || this.connectionCount > connectionCount
+          this.connected === undefined ||
+          this.connectionCount > connectionCount
         ) {
           console.warn(
             this.logPrefix(),

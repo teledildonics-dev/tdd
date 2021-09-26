@@ -71,7 +71,7 @@ export class Lovense extends AsyncDisposable {
   async vibration() {
     nextVib
     await lock();
-    if 
+    if
   }
 
   constructor(device: BluetoothDevice) {

@@ -114,8 +114,9 @@ export const sinny = (
   period: number = 1.0,
   magnitude: number = 1.0,
 ) => {
-  return magnitude *
-    (0.5 + 0.5 * Math.sin((x / period) * 2 * Math.PI - Math.PI / 2));
+  return (
+    magnitude * (0.5 + 0.5 * Math.sin((x / period) * 2 * Math.PI - Math.PI / 2))
+  );
 };
 
 export const compound = (a: number, b: number) => {

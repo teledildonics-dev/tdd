@@ -5,7 +5,7 @@ export const withEventStream = async <EventValue, Result>(
   target: EventTarget,
   eventName: string,
   eventMapper: (event: Event) => EventValue,
-  handler: (responses: ReadableStreamReader<EventValue>) => Result
+  handler: (responses: ReadableStreamReader<EventValue>) => Result,
 ): Promise<Result> => {
   let listener: undefined | ((event: Event) => void);
 
@@ -15,13 +15,13 @@ export const withEventStream = async <EventValue, Result>(
         eventName,
         (listener = (event: Event) => {
           controller.enqueue(eventMapper(event));
-        })
+        }),
       );
     },
 
     cancel() {
       target.removeEventListener(eventName, listener!);
-    }
+    },
   });
 
   const reader = stream.getReader();

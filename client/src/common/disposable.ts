@@ -56,7 +56,10 @@ export class AsyncDisposable {
 
 /// Error throw when you attempt to interact with an instance after dispose() was called.
 export class DisposedError<T> extends Error {
-  constructor(readonly instance: T, message: string = `${instance} already disposed`) {
+  constructor(
+    readonly instance: T,
+    message: string = `${instance} already disposed`,
+  ) {
     super(message);
   }
 }

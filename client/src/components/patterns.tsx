@@ -2,12 +2,10 @@ import type { FC } from "react";
 import React from "react";
 import type Lovense from "../lovense/lovense";
 
-export const PatternsControl: FC<
-  { lovense: Lovense; patterns: Array<Array<number>> }
-> = ({
-  lovense,
-  patterns,
-}) => {
+export const PatternsControl: FC<{
+  lovense: Lovense;
+  patterns: Array<Array<number>>;
+}> = ({ lovense, patterns }) => {
   return (
     <div style={{}}>
       {patterns.map((pattern, index) => (

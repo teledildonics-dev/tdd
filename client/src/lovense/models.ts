@@ -5,7 +5,7 @@ export enum Model {
   Hush = "Hush",
   Domi = "Domi",
   Edge = "Edge",
-  Osci = "Osci"
+  Osci = "Osci",
 }
 
 export const Nora = Model.Nora;
@@ -39,30 +39,30 @@ export const modelCapabilities = new Map<Model, DeviceCapabilities>([
     Nora,
     {
       vibration: true,
-      rotation: true
-    }
+      rotation: true,
+    },
   ],
   [
     Lush,
     {
       vibration: true,
-      patterns: 4
-    }
+      patterns: 4,
+    },
   ],
   [
     Hush,
     {
-      vibration: true
-    }
+      vibration: true,
+    },
   ],
   [
     Domi,
     {
       vibration: true,
       levels: 3,
-      patterns: 10
-    }
-  ]
+      patterns: 10,
+    },
+  ],
 ]);
 
 /// Maps model identifiers used in DeviceType responses to Models.
@@ -74,5 +74,5 @@ export const modelsById = new Map<string, Model>([
   ["Z", Hush],
   ["W", Domi],
   ["P", Edge],
-  ["O", Osci]
+  ["O", Osci],
 ]);

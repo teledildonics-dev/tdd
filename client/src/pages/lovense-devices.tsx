@@ -16,7 +16,7 @@ export const LovenseDevicesPage: FC<{}> = () => {
           display: "inline-block",
           margin: "4px",
           float: "right",
-          lineHeight: "18px"
+          lineHeight: "18px",
         }}
       >
         teledildonics.dev: my remote control playground. <br />
@@ -28,7 +28,11 @@ export const LovenseDevicesPage: FC<{}> = () => {
         <br />
         Open your developer console to see more.
         <br />
-        Only supports some <a href="https://www.lovense.com/compare">Lovense</a> devices.
+        Only supports some{" "}
+        <a href="https://www.lovense.com/compare">
+          Lovense
+        </a>{" "}
+        devices.
       </div>
 
       <DevicePanes />

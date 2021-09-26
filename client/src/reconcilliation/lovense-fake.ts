@@ -10,11 +10,7 @@ export class LovenseFake extends Lovense {
   protected async info_() {
     return {
       model: Nora,
-      id: "191109" +
-        performance
-          .now()
-          .toString(16)
-          .slice(6),
+      id: "191109" + performance.now().toString(16).slice(6),
     };
   }
 

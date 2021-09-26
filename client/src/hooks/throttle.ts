@@ -1,7 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { sleep } from "../common/async";
 
-export const useThrottledChanges = <T extends unknown>(interval: number, value: T) => {
+export const useThrottledChanges = <T extends unknown>(
+  interval: number,
+  value: T,
+) => {
   /// Whether this value is currently throttled, meaning that the value has
   /// changed within the last interval ms. If throttled == true, there will be
   /// an async function, which will set throttled to false once the interval has

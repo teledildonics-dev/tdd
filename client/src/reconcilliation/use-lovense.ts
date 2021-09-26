@@ -43,11 +43,11 @@ export const useLovense = (lovense?: Lovense): UseLovense => {
     return;
   }
 
-  return ({
+  return {
     lovense,
     model: info.model,
     id: info.id,
     canVibrate: true,
     canRotate: canRotate,
-  } as unsafe) as UseLovense;
+  } as unsafe as UseLovense;
 };

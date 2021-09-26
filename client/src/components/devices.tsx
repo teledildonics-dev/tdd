@@ -1,4 +1,4 @@
-import React, { useState, FC } from "react";
+import React, { FC, useState } from "react";
 import BluetoothSelector from "./bluetooth-selector";
 import { DeviceControl } from "./lovense-control";
 import { deviceProfile } from "../lovense/lovense";
@@ -9,13 +9,14 @@ export const DevicePanes: FC = () => {
     <>
       <section
         style={{
-          margin: "4px"
+          margin: "4px",
         }}
       >
         <BluetoothSelector
           options={deviceProfile}
-          onChange={event => setDevice(event.target.value)}
-        ></BluetoothSelector>
+          onChange={(event) => setDevice(event.target.value)}
+        >
+        </BluetoothSelector>
         {device && <DeviceControl device={device}></DeviceControl>}
       </section>
 
