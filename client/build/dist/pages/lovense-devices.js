@@ -15,7 +15,7 @@ export const LovenseDevicesPage = () => {
       float: "right",
       lineHeight: "18px"
     }
-  }, "teledildonics.dev: my remote control playground. ", /* @__PURE__ */ React.createElement("br", null), "Buggy, unstable, and unofficial.", " ", /* @__PURE__ */ React.createElement("br", null), "Open your developer console to see more.", /* @__PURE__ */ React.createElement("br", null), "Only supports some ", /* @__PURE__ */ React.createElement("a", {
+  }, "teledildonics.dev: my remote control playground. ", /* @__PURE__ */ React.createElement("br", null), "Buggy, unstable, and unofficial. ", /* @__PURE__ */ React.createElement("br", null), "Open your developer console to see more.", /* @__PURE__ */ React.createElement("br", null), "Only supports some", " ", /* @__PURE__ */ React.createElement("a", {
     href: "https://www.lovense.com/compare"
   }, "Lovense"), " ", "devices."), /* @__PURE__ */ React.createElement(DevicePanes, null));
 };

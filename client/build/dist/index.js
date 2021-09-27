@@ -3,24 +3,20 @@ import.meta.env = __SNOWPACK_ENV__;
 
 import React from "../_snowpack/pkg/react.js";
 import ReactDOM from "../_snowpack/pkg/react-dom.js";
-import {BrowserRouter, Switch, Route} from "../_snowpack/pkg/react-router-dom.js";
+import {BrowserRouter, Link, Route, Switch} from "../_snowpack/pkg/react-router-dom.js";
 import {LovenseDevicesPage} from "./pages/lovense-devices.js";
 import {ScrapPage} from "./reconcilliation/scrap.js";
 import "./common.css.proxy.js";
-const routes = {
-  "/lovense-devices": LovenseDevicesPage,
-  "/scrap": ScrapPage
-};
 const App = () => {
-  return /* @__PURE__ */ React.createElement("section", {
+  return /* @__PURE__ */ React.createElement(BrowserRouter, null, /* @__PURE__ */ React.createElement("section", {
     style: {margin: "32px", fontSize: "24px"}
   }, /* @__PURE__ */ React.createElement("h1", {
     style: {
       marginBottom: "24px"
     }
-  }, /* @__PURE__ */ React.createElement("a", {
-    href: "/"
-  }, "teledildonics.dev")), /* @__PURE__ */ React.createElement(BrowserRouter, null, /* @__PURE__ */ React.createElement(Switch, null, /* @__PURE__ */ React.createElement(Route, {
+  }, /* @__PURE__ */ React.createElement(Link, {
+    to: "/"
+  }, "teledildonics.dev")), /* @__PURE__ */ React.createElement(Switch, null, /* @__PURE__ */ React.createElement(Route, {
     exact: true,
     path: "/"
   }, /* @__PURE__ */ React.createElement(IndexPage, null)), /* @__PURE__ */ React.createElement(Route, {
@@ -36,12 +32,12 @@ export const IndexPage = () => {
     style: {listStyleType: "square"}
   }, /* @__PURE__ */ React.createElement("li", {
     style: {marginTop: "16px", marginLeft: "1em"}
-  }, /* @__PURE__ */ React.createElement("a", {
-    href: "/lovense-devices"
+  }, /* @__PURE__ */ React.createElement(Link, {
+    to: "/lovense-devices"
   }, "Lovense devices")), /* @__PURE__ */ React.createElement("li", {
     style: {marginTop: "16px", marginLeft: "1em"}
-  }, /* @__PURE__ */ React.createElement("a", {
-    href: "/scrap"
+  }, /* @__PURE__ */ React.createElement(Link, {
+    to: "/scrap"
   }, "scrap")));
 };
 ReactDOM.render(/* @__PURE__ */ React.createElement(React.StrictMode, null, /* @__PURE__ */ React.createElement(App, null)), document.getElementById("root"));
