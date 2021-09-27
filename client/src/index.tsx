@@ -1,29 +1,24 @@
 import React, { FC } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
 
 import { LovenseDevicesPage } from "./pages/lovense-devices";
 import { ScrapPage } from "./reconcilliation/scrap";
 
 import "./common.scss";
 
-const routes: { [_: string]: FC } = {
-  "/lovense-devices": LovenseDevicesPage,
-  "/scrap": ScrapPage,
-};
-
 const App: FC = () => {
   return (
-    <section style={{ margin: "32px", fontSize: "24px" }}>
-      <h1
-        style={{
-          marginBottom: "24px",
-        }}
-      >
-        <a href="/">teledildonics.dev</a>
-      </h1>
+    <BrowserRouter>
+      <section style={{ margin: "32px", fontSize: "24px" }}>
+        <h1
+          style={{
+            marginBottom: "24px",
+          }}
+        >
+          <Link to="/">teledildonics.dev</Link>
+        </h1>
 
-      <BrowserRouter>
         <Switch>
           <Route exact path="/">
             <IndexPage />
@@ -35,8 +30,8 @@ const App: FC = () => {
             <ScrapPage />
           </Route>
         </Switch>
-      </BrowserRouter>
-    </section>
+      </section>
+    </BrowserRouter>
   );
 };
 
@@ -44,10 +39,10 @@ export const IndexPage: FC = () => {
   return (
     <ul style={{ listStyleType: "square" }}>
       <li style={{ marginTop: "16px", marginLeft: "1em" }}>
-        <a href="/lovense-devices">Lovense devices</a>
+        <Link to="/lovense-devices">Lovense devices</Link>
       </li>
       <li style={{ marginTop: "16px", marginLeft: "1em" }}>
-        <a href="/scrap">scrap</a>
+        <Link to="/scrap">scrap</Link>
       </li>
     </ul>
   );

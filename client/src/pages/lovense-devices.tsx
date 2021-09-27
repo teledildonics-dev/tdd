@@ -20,8 +20,7 @@ export const LovenseDevicesPage: FC<{}> = () => {
         }}
       >
         teledildonics.dev: my remote control playground. <br />
-        Buggy, unstable, and unofficial.{" "}
-        <br />
+        Buggy, unstable, and unofficial. <br />
         Open your developer console to see more.
         <br />
         Only supports some <a href="https://www.lovense.com/compare">

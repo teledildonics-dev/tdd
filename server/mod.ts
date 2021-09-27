@@ -2,9 +2,7 @@ addEventListener("fetch", (event: FetchEvent) => {
   event.respondWith((async () => {
     let { pathname } = new URL(event.request.url);
 
-    if (pathname === "/") {
-      pathname = "/index.html";
-    }
+    const indexHtml = await Deno.readFile("client/build/index.html");
 
     let contentType: any = {
       html: "text/html",
@@ -12,7 +10,8 @@ addEventListener("fetch", (event: FetchEvent) => {
       jsm: "application/javascript",
       css: "text/css",
       png: "image/png",
-    }[pathname.split(/\./g).filter(Boolean).pop() as any] ?? "application/javascript";
+    }[pathname.split(/\./g).filter(Boolean).pop() as any] ??
+      "application/javascript";
 
     try {
       if (contentType) {
@@ -26,8 +25,10 @@ addEventListener("fetch", (event: FetchEvent) => {
       console.error(error);
     }
 
-    return new Response(`file not found: ${pathname}`, {
-      status: 404,
+    return new Response(indexHtml, {
+      headers: {
+        "Content-Type": "text/html",
+      },
     });
   })());
 });
