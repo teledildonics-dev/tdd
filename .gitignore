@@ -7,11 +7,9 @@
 .snowpack
 **/*.rs.bk
 /.pnp
-/build
 /coverage
 /node_modules
 /target
-build
 node_modules
 npm-debug.log*
 yarn-debug.log*
