@@ -11,6 +11,7 @@ addEventListener("fetch", (event: FetchEvent) => {
       js: "application/javascript",
       jsm: "application/javascript",
       css: "text/css",
+      '': "application/javascript"
     }[pathname.split(/\./g).pop() as any];
 
     try {
