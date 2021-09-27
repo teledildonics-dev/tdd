@@ -13,15 +13,19 @@ addEventListener("fetch", async (event: FetchEvent) => {
     css: 'text/css',
   }[pathname.split(/\./g).pop() as any];
 
-  if (contentType) {
-    return new Response(await Deno.readFile(`client/build${pathname}`), {
-      headers: {
-        "Content-Type": contentType
-      }
-    })
-  } else {
-    return new Response("", {
-      status: 404,
-    })
+  try {
+    if (contentType) {
+      return new Response(await Deno.readFile(`client/build${pathname}`), {
+        headers: {
+          "Content-Type": contentType
+        }
+      })
+    }
+  } catch (error) {
+    console.error(error);
   }
+
+  return new Response(`file not found: ${pathname}`, {
+    status: 404,
+  });
 });
