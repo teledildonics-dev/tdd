@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "../../_snowpack/pkg/react";
+import React, {useEffect, useState} from "../../_snowpack/pkg/react.js";
 import {deviceProfile} from "../lovense/lovense.js";
 import BluetoothSelector, {
   buttonStyles

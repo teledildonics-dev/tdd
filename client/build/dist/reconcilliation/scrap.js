@@ -1,5 +1,5 @@
-import {useState} from "../../_snowpack/pkg/react";
-import React from "../../_snowpack/pkg/react";
+import {useState} from "../../_snowpack/pkg/react.js";
+import React from "../../_snowpack/pkg/react.js";
 import {LovenseSelector} from "./lovense-selector.js";
 import {useLovense} from "./use-lovense.js";
 export const ScrapPage = () => {

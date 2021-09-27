@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "../../_snowpack/pkg/react";
+import {useEffect, useRef, useState} from "../../_snowpack/pkg/react.js";
 import {sleep} from "../common/async.js";
 export const useThrottledChanges = (interval, value) => {
   const throttled = useRef(false);

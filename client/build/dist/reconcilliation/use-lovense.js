@@ -1,4 +1,4 @@
-import {useEffect, useState} from "../../_snowpack/pkg/react";
+import {useEffect, useState} from "../../_snowpack/pkg/react.js";
 export const useLovense = (lovense) => {
   const [info, setInfo] = useState();
   const [canRotate, setCanRotate] = useState(false);

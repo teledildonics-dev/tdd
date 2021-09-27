@@ -1,4 +1,4 @@
-import React, {useState} from "../../_snowpack/pkg/react";
+import React, {useState} from "../../_snowpack/pkg/react.js";
 import {BluetoothLogo} from "./bluetooth-logo.js";
 export const buttonStyles = {
   display: "inline-flex",

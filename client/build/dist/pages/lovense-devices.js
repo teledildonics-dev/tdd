@@ -1,4 +1,4 @@
-import React from "../../_snowpack/pkg/react";
+import React from "../../_snowpack/pkg/react.js";
 import {DevicePanes} from "../components/devices.js";
 export const LovenseDevicesPage = () => {
   return /* @__PURE__ */ React.createElement("main", null, /* @__PURE__ */ React.createElement("div", {

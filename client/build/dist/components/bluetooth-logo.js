@@ -1,4 +1,4 @@
-import React from "../../_snowpack/pkg/react";
+import React from "../../_snowpack/pkg/react.js";
 export const BluetoothLogo = ({
   width = 16,
   height

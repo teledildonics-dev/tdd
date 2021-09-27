@@ -1,5 +1,5 @@
 import Lovense from "../lovense/lovense.js";
-import {useEffect, useState} from "../../_snowpack/pkg/react";
+import {useEffect, useState} from "../../_snowpack/pkg/react.js";
 export const useLovense = (device, onConnect, onDisconnect) => {
   const [lovense, setState] = useState();
   useEffect(() => {

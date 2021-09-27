@@ -1,9 +1,9 @@
 import * as __SNOWPACK_ENV__ from '../_snowpack/env.js';
 import.meta.env = __SNOWPACK_ENV__;
 
-import React from "../_snowpack/pkg/react";
-import ReactDOM from "../_snowpack/pkg/react-dom";
-import {BrowserRouter, Switch, Route} from "../_snowpack/pkg/react-router-dom";
+import React from "../_snowpack/pkg/react.js";
+import ReactDOM from "../_snowpack/pkg/react-dom.js";
+import {BrowserRouter, Switch, Route} from "../_snowpack/pkg/react-router-dom.js";
 import {LovenseDevicesPage} from "./pages/lovense-devices.js";
 import {ScrapPage} from "./reconcilliation/scrap.js";
 import "./common.css.proxy.js";

@@ -1,4 +1,4 @@
-import {useEffect} from "../../_snowpack/pkg/react";
+import {useEffect} from "../../_snowpack/pkg/react.js";
 export const useLovenseDebug = (lovense) => {
   useEffect(() => {
     if (!lovense) {

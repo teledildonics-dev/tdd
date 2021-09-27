@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from "../../_snowpack/pkg/react";
+import React, {useCallback, useEffect, useState} from "../../_snowpack/pkg/react.js";
 import {useLovense} from "../hooks/lovense.js";
 import {useThrottledChanges} from "../hooks/throttle.js";
 import {PatternsControl} from "./patterns.js";

@@ -1,4 +1,4 @@
-import React from "../../_snowpack/pkg/react";
+import React from "../../_snowpack/pkg/react.js";
 import {assert, unwrap} from "../common/safety.js";
 const outerHeight = 300;
 const innerHeight = 2;
