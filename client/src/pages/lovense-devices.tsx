@@ -21,10 +21,6 @@ export const LovenseDevicesPage: FC<{}> = () => {
       >
         teledildonics.dev: my remote control playground. <br />
         Buggy, unstable, and unofficial.{" "}
-        <a href="https://github.com/teledildonics-dev/teledildonics-dev">
-          View source here
-        </a>
-        .
         <br />
         Open your developer console to see more.
         <br />

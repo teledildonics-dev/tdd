@@ -6,6 +6,7 @@ export enum Model {
   Domi = "Domi",
   Edge = "Edge",
   Osci = "Osci",
+  Quake = "Quake",
 }
 
 export const Nora = Model.Nora;
@@ -15,6 +16,7 @@ export const Hush = Model.Hush;
 export const Domi = Model.Domi;
 export const Edge = Model.Edge;
 export const Osci = Model.Osci;
+export const Quake = Model.Quake;
 
 /// The capabilities of a given Lovense device.
 export type DeviceCapabilities = {
@@ -56,6 +58,13 @@ export const modelCapabilities = new Map<Model, DeviceCapabilities>([
     },
   ],
   [
+    Quake,
+    {
+      vibration: true,
+      patterns: undefined,
+    },
+  ],
+  [
     Domi,
     {
       vibration: true,
@@ -75,4 +84,5 @@ export const modelsById = new Map<string, Model>([
   ["W", Domi],
   ["P", Edge],
   ["O", Osci],
+  ["J", Quake],
 ]);
