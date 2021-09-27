@@ -3,7 +3,7 @@ addEventListener("fetch", async (event: FetchEvent) => {
   let { pathname } = new URL(event.request.url);
 
   if (pathname === "/") {
-    pathname = "index.html";
+    pathname = "/index.html";
   }
 
   let contentType: any = {
