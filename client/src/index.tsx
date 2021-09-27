@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 
 import { LovenseDevicesPage } from "./pages/lovense-devices";
 import { ScrapPage } from "./reconcilliation/scrap";

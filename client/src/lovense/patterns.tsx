@@ -17,8 +17,8 @@ export const PatternDisplay: FC<{
 }> = ({ pattern, x, height = 100 }) => {
   const y = pattern(x);
 
-  const xOffset =
-    0.5 - Math.max(0, x * xScale - 25 * Math.log(x) - outerWidth / 4 + 100);
+  const xOffset = 0.5 -
+    Math.max(0, x * xScale - 25 * Math.log(x) - outerWidth / 4 + 100);
 
   const canvas = document.createElement("canvas");
   canvas.width = outerWidth;
