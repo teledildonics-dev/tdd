@@ -9,6 +9,10 @@
 			"name": "🖧 Server",
 		},
 		{
+			"path": "../stpihkal",
+			"name": "📝 STPIHKAL"
+		},
+		{
 			"path": ".",
 			"name": "📁 Workspace"
 		},
@@ -16,5 +20,10 @@
 	"settings": {
 		"editor.defaultFormatter": "denoland.vscode-deno",
 		"editor.formatOnSave": true
+	},
+	"extensions": {
+		"recommendations": [
+			"denoland.vscode-deno"
+		]
 	}
 }
