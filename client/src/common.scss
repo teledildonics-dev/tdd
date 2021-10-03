@@ -1,3 +1,89 @@
-:root {
-  font-family: Garamond;
+* {
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+html:root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+  background: #222;
+  color: #fff;
+}
+
+main#app {
+  $foreground-color: #000000;
+  $background-color: #ffffff;
+  $accent-color: #ef63ff;
+
+  font-weight: 700;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+
+  padding: 16px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 2px black, 0 0 4px 0 white;
+
+  code,
+  pre {
+    font-weight: 500;
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  background: $background-color;
+  color: $foreground-color;
+
+  button {
+    padding: 2px 6px;
+    cursor: pointer;
+
+    border: 2px outset mix($foreground-color, $background-color, 75%);
+    border-radius: 4px;
+    background-color: mix($foreground-color, $background-color, 10%);
+
+    &:focus {
+      outline-offset: 4px;
+      outline-width: 2px;
+      outline-style: dashed;
+      outline-color: $accent-color;
+    }
+
+    &:active {
+      border: 2px inset
+        mix($accent-color, mix($foreground-color, $background-color, 75%), 25%);
+      background-color: mix(
+        $accent-color,
+        mix($foreground-color, $background-color, 25%),
+        25%
+      );
+    }
+  }
+
+  a {
+    color: $foreground-color;
+    text-decoration: underline solid $accent-color 2px;
+    text-decoration-skip-ink: all;
+
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration-skip-ink: none;
+    }
+  }
 }

@@ -9,6 +9,7 @@ export const useLovenseDebug = (lovense: Lovense | null) => {
     }
 
     (window as unsafe).lovense = lovense;
+    ((window as unsafe).lovenses ??= []).push(lovense);
     (window as unsafe).call = async (command: string) =>
       lovense.call(command, async (responses) => {
         const { value } = await responses.read();

@@ -1,62 +1,96 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 
 import { LovenseDevicesPage } from "./pages/lovense-devices";
-import { ScrapPage } from "./reconcilliation/scrap";
+import { ScrapPage } from "./reconciliation/scrap";
 
 import "./common.scss";
 
 const App: FC = () => {
   return (
     <BrowserRouter>
-      <section style={{ margin: "32px", fontSize: "24px" }}>
-        <h1
-          style={{
-            marginBottom: "24px",
-          }}
-        >
-          <Link to="/">teledildonics.dev</Link>
-        </h1>
+      <Switch>
+        <Route exact path="/">
+          <p>
+            Where are you?
+          </p>
+        </Route>
 
-        <Switch>
-          <Route exact path="/">
-            <IndexPage />
-          </Route>
-          <Route exact path="/lovense-devices">
-            <LovenseDevicesPage />
-          </Route>
-          <Route exact path="/scrap">
-            <ScrapPage />
-          </Route>
-        </Switch>
-      </section>
+        <Route exact path="/lovense-devices">
+          <LovenseDevicesPage />
+        </Route>
+
+        <Route exact path="/scrap">
+          <ScrapPage />
+        </Route>
+
+        <Route path="/vibe">
+          <VibePinkPage />
+        </Route>
+
+        <Route>
+          404
+        </Route>
+      </Switch>
     </BrowserRouter>
   );
 };
 
-export const IndexPage: FC = () => {
+const VibePinkPage: FC = () => {
+  document.title = "vibe.pink - instant online phone vibrator";
+
+  const [allDevices, setAllDevices] = useState<readonly BluetoothDevice[]>();
+
+  if (!allDevices) {
+    navigator.bluetooth.getDevices().then(setAllDevices);
+  }
+
   return (
-    <ul style={{ listStyleType: "square" }}>
-      <li style={{ marginTop: "16px", marginLeft: "1em" }}>
-        <Link to="/lovense-devices">Lovense devices</Link>
-      </li>
-      <li style={{ marginTop: "16px", marginLeft: "1em" }}>
-        <Link to="/scrap">scrap</Link>
-      </li>
-    </ul>
+    <>
+      <section>
+        <button
+          onClick={async () => {
+            await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
+            navigator.bluetooth.getDevices().then(setAllDevices);
+          }}
+        >
+          Pair Device
+        </button>{" "}
+        <button
+          onClick={(clickEvent) => {
+            please();
+          }}
+        >
+          Please Please Me
+        </button>
+      </section>
+
+      <section>
+        {allDevices?.map((x) => (
+          <p key={x.id}>
+            {x.name}{" "}
+            <code>
+              {[...atob(x.id)].map((b) =>
+                b.charCodeAt(0).toString(16).padStart(2, "0")
+              ).join("").slice(0, 4)}
+            </code>
+          </p>
+        ))}
+      </section>
+    </>
   );
+};
+
+const please = () => {
+  navigator.bluetooth.getDevices();
 };
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById("root"),
+  document.querySelector("main#app"),
 );
 
-// Hot Module Replacement (HMR) - Remove this snippet to remove HMR.
-// Learn more: https://snowpack.dev/concepts/hot-module-replacement
-if (import.meta.hot) {
-  import.meta.hot.accept();
-}
+import.meta.hot?.accept();
