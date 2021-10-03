@@ -38,7 +38,7 @@ const App: FC = () => {
 };
 
 const VibePinkPage: FC = () => {
-  document.title = "vibe.pink - instant online phone vibrator";
+  document.title = "vibe.pink - online vibrator for phones and bluetooth";
 
   const [allDevices, setAllDevices] = useState<readonly BluetoothDevice[]>();
 
@@ -47,16 +47,41 @@ const VibePinkPage: FC = () => {
   }
 
   return (
-    <>
-      <section>
+    <main className="VibePinkPage">
+      <section className="AddDevice">
         <button
           onClick={async () => {
             await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
             navigator.bluetooth.getDevices().then(setAllDevices);
           }}
         >
-          Pair Device
+          Add Bluetooth Toy
         </button>{" "}
+        <button>
+          Add Game Controller
+        </button>{" "}
+        <button>
+          Add This Phone
+        </button>
+      </section>
+
+      <section className="Devices">
+        <h2>Devices</h2>
+        {allDevices?.map((x) => (
+          <p key={x.id}>
+            <label>
+              <input type="checkbox" defaultChecked={true} /> {x.name}{" "}
+              <code>
+                {[...atob(x.id)].map((b) =>
+                  b.charCodeAt(0).toString(16).padStart(2, "0")
+                ).join("").slice(0, 4)}
+              </code>
+            </label>
+          </p>
+        ))}
+      </section>
+
+      <section className="Control">
         <button
           onClick={(clickEvent) => {
             please();
@@ -65,20 +90,7 @@ const VibePinkPage: FC = () => {
           Please Please Me
         </button>
       </section>
-
-      <section>
-        {allDevices?.map((x) => (
-          <p key={x.id}>
-            {x.name}{" "}
-            <code>
-              {[...atob(x.id)].map((b) =>
-                b.charCodeAt(0).toString(16).padStart(2, "0")
-              ).join("").slice(0, 4)}
-            </code>
-          </p>
-        ))}
-      </section>
-    </>
+    </main>
   );
 };
 

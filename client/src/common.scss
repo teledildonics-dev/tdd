@@ -32,7 +32,7 @@ main#app {
   $background-color: #ffffff;
   $accent-color: #ef63ff;
 
-  font-weight: 700;
+  font-weight: 500;
   font-size: 16px;
   font-family: "Open Sans", sans-serif;
 
@@ -40,10 +40,22 @@ main#app {
   border-radius: 4px;
   box-shadow: 0 0 4px 2px black, 0 0 4px 0 white;
 
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: bold;
+  }
+
   code,
   pre {
     font-weight: 500;
     font-family: "JetBrains Mono", monospace;
+  }
+
+  label {
+    user-select: none;
+    cursor: pointer;
   }
 
   background: $background-color;
@@ -58,10 +70,10 @@ main#app {
     background-color: mix($foreground-color, $background-color, 10%);
 
     &:focus {
-      outline-offset: 4px;
-      outline-width: 2px;
-      outline-style: dashed;
-      outline-color: $accent-color;
+      outline-offset: 6px;
+      outline-width: 4px;
+      outline-style: solid;
+      outline-color: rgba($accent-color, 0.5);
     }
 
     &:active {
@@ -84,6 +96,42 @@ main#app {
     &:active,
     &:focus {
       text-decoration-skip-ink: none;
+    }
+  }
+
+  .VibePinkPage {
+    > * {
+      margin: 16px;
+
+      &.Devices {
+        label {
+          display: block;
+          padding: 8px 16px;
+          border-radius: 32px;
+          margin: 8px;
+          font-size: 24px;
+
+          input[type="checkbox"] {
+            appearance: none;
+
+            &::after {
+              content: "";
+              display: inline-block;
+              width: 32px;
+              height: 32px;
+              image-rendering: optimizeQuality;
+              background: url("/icon.png");
+              background-size: contain;
+              vertical-align: middle;
+              opacity: 0.25;
+            }
+
+            &:checked::after {
+              opacity: 1;
+            }
+          }
+        }
+      }
     }
   }
 }
