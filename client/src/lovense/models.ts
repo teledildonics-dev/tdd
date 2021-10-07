@@ -58,6 +58,12 @@ export const modelCapabilities = new Map<Model, DeviceCapabilities>([
     },
   ],
   [
+    Max,
+    {
+      vibration: true,
+    },
+  ],
+  [
     Quake,
     {
       vibration: true,

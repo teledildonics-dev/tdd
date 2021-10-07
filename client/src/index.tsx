@@ -6,6 +6,8 @@ import { LovenseDevicesPage } from "./pages/lovense-devices";
 import { ScrapPage } from "./reconciliation/scrap";
 
 import "./common.scss";
+import { useLovense } from "./hooks/lovense";
+import { deviceProfile } from "./lovense/lovense";
 
 const App: FC = () => {
   return (
@@ -38,7 +40,8 @@ const App: FC = () => {
 };
 
 const VibePinkPage: FC = () => {
-  document.title = "vibe.pink - online vibrator for phones and bluetooth";
+  document.title =
+    "vibe.pink - online vibrator using your phone, game controller, or sex toys";
 
   const [allDevices, setAllDevices] = useState<readonly BluetoothDevice[]>();
 
@@ -46,18 +49,26 @@ const VibePinkPage: FC = () => {
     navigator.bluetooth.getDevices().then(setAllDevices);
   }
 
+  const [allGamepads, setAllGamepads] = useState(
+    () => [...navigator.getGamepads()].filter(Boolean),
+  );
+
   return (
     <main className="VibePinkPage">
       <section className="AddDevice">
         <button
           onClick={async () => {
-            await navigator.bluetooth.requestDevice({ acceptAllDevices: true });
+            await navigator.bluetooth.requestDevice(deviceProfile);
             navigator.bluetooth.getDevices().then(setAllDevices);
           }}
         >
           Add Bluetooth Toy
         </button>{" "}
-        <button>
+        <button
+          onClick={() => {
+            setAllGamepads([...navigator.getGamepads()].filter(Boolean));
+          }}
+        >
           Add Game Controller
         </button>{" "}
         <button>
@@ -66,18 +77,20 @@ const VibePinkPage: FC = () => {
       </section>
 
       <section className="Devices">
-        <h2>Devices</h2>
-        {allDevices?.map((x) => (
-          <p key={x.id}>
-            <label>
-              <input type="checkbox" defaultChecked={true} /> {x.name}{" "}
-              <code>
-                {[...atob(x.id)].map((b) =>
-                  b.charCodeAt(0).toString(16).padStart(2, "0")
-                ).join("").slice(0, 4)}
-              </code>
-            </label>
-          </p>
+        <h2>Bluetooth Toys</h2>
+        {allDevices?.map((device) => (
+          <div key={device.id}>
+            <PinkDevice device={device} />
+          </div>
+        ))}
+      </section>
+
+      <section className="Devices">
+        <h2>Game Controllers</h2>
+        {allGamepads?.map((gamepad) => (
+          <div key={gamepad!.id}>
+            {gamepad!.id}
+          </div>
         ))}
       </section>
 
@@ -91,6 +104,41 @@ const VibePinkPage: FC = () => {
         </button>
       </section>
     </main>
+  );
+};
+
+const PinkDevice: FC<{ device: BluetoothDevice }> = (
+  { device },
+) => {
+  const lovense = useLovense(device);
+  return (
+    <>
+      <label>
+        <input type="checkbox" defaultChecked={true} /> {device.name}{" "}
+        <code>
+          {[...atob(device.id)].map((b) =>
+            b.charCodeAt(0).toString(16).padStart(2, "0")
+          ).join("").slice(0, 4)}
+        </code>
+      </label>
+      <section>
+        <button
+          onClick={() => {
+            lovense?.connect();
+          }}
+        >
+          connect
+        </button>
+
+        <button
+          onClick={() => {
+            lovense?.disconnect();
+          }}
+        >
+          disconnect
+        </button>
+      </section>
+    </>
   );
 };
 
